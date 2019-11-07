@@ -1,0 +1,27 @@
+{
+  "name": "teamwork",
+  "version": "1.0.0",
+  "description": "The backend to Andela DevC training capstone project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Simeon979/teamwork.git"
+  },
+  "keywords": [
+    "web-app",
+    "nodejs",
+    "expressjs",
+    "andela",
+    "devc",
+    "capstone"
+  ],
+  "author": "Simeon Adegbola",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Simeon979/teamwork/issues"
+  },
+  "homepage": "https://github.com/Simeon979/teamwork#readme"
+}
