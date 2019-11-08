@@ -25,6 +25,9 @@
   },
   "homepage": "https://github.com/Simeon979/teamwork#readme",
   "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "jasmine": "^3.5.0"
   }
 }
