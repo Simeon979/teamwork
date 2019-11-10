@@ -4,7 +4,7 @@
   "description": "The backend to Andela DevC training capstone project",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "export NODE_ENV='test' && jasmine"
   },
   "repository": {
     "type": "git",
