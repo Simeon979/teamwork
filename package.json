@@ -4,7 +4,7 @@
   "description": "The backend to Andela DevC training capstone project",
   "main": "index.js",
   "scripts": {
-    "test": "export NODE_ENV='test' && jasmine"
+    "test": "export NODE_ENV='test' && mocha"
   },
   "repository": {
     "type": "git",
@@ -25,10 +25,11 @@
   },
   "homepage": "https://github.com/Simeon979/teamwork#readme",
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "jasmine": "^3.5.0"
+    "mocha": "^6.2.2"
   },
   "dependencies": {
     "pg": "^7.12.1"
