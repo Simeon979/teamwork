@@ -4,6 +4,7 @@
   "description": "The backend to Andela DevC training capstone project",
   "main": "index.js",
   "scripts": {
+    "start": "export NODE_ENV='prod' && node app.js",
     "test": "export NODE_ENV='test' && mocha"
   },
   "repository": {
@@ -26,12 +27,15 @@
   "homepage": "https://github.com/Simeon979/teamwork#readme",
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "mocha": "^6.2.2"
+    "mocha": "^6.2.2",
+    "nodemon": "^1.19.4"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "pg": "^7.12.1"
   }
 }
