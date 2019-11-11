@@ -16,4 +16,6 @@ pool.on('connect', () => {
 
 module.exports = {
   query: (text, params) => pool.query(text, params),
+  // to clean up after testing
+  pool,
 };
