@@ -97,4 +97,17 @@ describe('POST /auth/signin', () => {
       expect.fail(err);
     }
   });
+
+  it('fails to sign in unregistered user', async () => {
+    try {
+      const res = await chai.request(app)
+        .post('/auth/signin')
+        .send({ email: 'haha@not.registered', password: `${complete.password}incorrect` });
+      expect(res.body).to.be.a('object');
+      expect(res.body).to.have.property('status', 'error');
+      expect(res.body).to.have.property('error', 'user not found');
+    } catch (err) {
+      expect.fail(err);
+    }
+  });
 });
