@@ -35,7 +35,11 @@
     "nodemon": "^1.19.4"
   },
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "express": "^4.17.1",
-    "pg": "^7.12.1"
+    "express-validator": "^6.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^7.12.1",
+    "ramda": "^0.26.1"
   }
 }
