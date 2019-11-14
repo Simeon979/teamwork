@@ -2,8 +2,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const { app } = require('../app');
-const { query } = require('../db');
+const { app } = require('../../../app');
+const { query } = require('../../../db');
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -26,7 +26,7 @@ const incomplete = {
 };
 
 describe('POST /auth/create-user', () => {
-  beforeEach(async () => query('delete from employees'));
+  beforeEach(async () => query('TRUNCATE employees CASCADE'));
 
   it('should not create an employee with incomplete information', async () => {
     try {
@@ -61,7 +61,7 @@ describe('POST /auth/create-user', () => {
 describe('POST /auth/signin', () => {
   before(async () => {
     try {
-      await query('delete from employees');
+      await query('TRUNCATE employees CASCADE');
       await chai.request(app)
         .post('/auth/create-user')
         .send(complete);
