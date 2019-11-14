@@ -2,12 +2,13 @@ const express = require('express');
 
 const authRouter = require('./routes/auth');
 const gifsRouter = require('./routes/gifs');
+const authorize = require('./services/session');
 
 const app = express();
 
 app.use(express.json());
 app.use('/auth', authRouter);
-app.use('/gifs', gifsRouter);
+app.use('/gifs', authorize, gifsRouter);
 
 const PORT = process.env.PORT || 3000;
 
