@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS articles (
   created_on timestamp NOT NULL DEFAULT NOW(),
   title text NOT NULL,
   article_content text NOT NULL,
-  uploader_id int NOT NULL REFERENCES employees (employeeid)
+  poster_id int NOT NULL REFERENCES employees (employeeid)
 );

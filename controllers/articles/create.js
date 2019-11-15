@@ -23,7 +23,7 @@ const createArticle = [
       article_id,
       title,
       article_content,
-      uploader_id
+      poster_id
     ) VALUES ($1, $2, $3, $4)
     RETURNING *
     `;
