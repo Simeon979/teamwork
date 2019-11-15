@@ -88,4 +88,20 @@ describe('/articles', () => {
       }
     });
   });
+
+  describe('DELETE /:articleId', () => {
+    it('successfully deletes posted articles', async () => {
+      try {
+        const res = await chai.request(app)
+          .delete(`/articles/${postedArticle.articleId}`)
+          .set('token', token);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('status', 'success');
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('message', 'Article successfully deleted');
+      } catch (err) {
+        expect.fail(err);
+      }
+    });
+  });
 });
