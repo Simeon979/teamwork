@@ -2,6 +2,7 @@ const express = require('express');
 
 const authRouter = require('./routes/auth');
 const gifsRouter = require('./routes/gifs');
+const articlesRouter = require('./routes/articles');
 const authorize = require('./services/session');
 
 const app = express();
@@ -9,8 +10,9 @@ const app = express();
 app.use(express.json());
 app.use('/auth', authRouter);
 app.use('/gifs', authorize, gifsRouter);
+app.use('/articles', authorize, articlesRouter);
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3100;
 
 const server = app.listen(PORT, () => { console.log(`Server running on port ${PORT}`); });
 
