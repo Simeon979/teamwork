@@ -23,7 +23,7 @@ const testUser = {
   address: 'No 0, Nowhere Ave, Unknown.',
 };
 
-describe('POST /articles', () => {
+describe('/articles', () => {
   let token;
 
   before(async () => {
@@ -39,25 +39,27 @@ describe('POST /articles', () => {
     }
   });
 
-  it('successfully uploads articles', async () => {
-    try {
-      const res = await chai.request(app)
-        .post('/articles')
-        .set('token', token)
-        .send({
-          title: uploadedTestArticleTitle,
-          article: uploadedTestArticleContent,
-        });
+  describe('POST /', () => {
+    it('successfully uploads articles', async () => {
+      try {
+        const res = await chai.request(app)
+          .post('/articles')
+          .set('token', token)
+          .send({
+            title: uploadedTestArticleTitle,
+            article: uploadedTestArticleContent,
+          });
 
-      expect(res.body).to.be.a('object');
-      expect(res.body).to.have.property('status', 'success');
-      expect(res.body).to.have.property('data');
-      expect(res.body.data).to.have.property('articleId').that.is.a('string');
-      expect(res.body.data).to.have.property('message', 'Article successfully posted');
-      expect(res.body.data).to.have.property('createdOn').that.is.a('string');
-      expect(res.body.data).to.have.property('title', uploadedTestArticleTitle);
-    } catch (err) {
-      expect.fail(err);
-    }
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('status', 'success');
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('articleId').that.is.a('string');
+        expect(res.body.data).to.have.property('message', 'Article successfully posted');
+        expect(res.body.data).to.have.property('createdOn').that.is.a('string');
+        expect(res.body.data).to.have.property('title', uploadedTestArticleTitle);
+      } catch (err) {
+        expect.fail(err);
+      }
+    });
   });
 });
