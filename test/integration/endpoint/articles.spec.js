@@ -9,8 +9,15 @@ const { query } = require('../../../db');
 const { expect } = chai;
 chai.use(chaiHttp);
 
-const uploadedTestArticleTitle = 'Awesome title';
-const uploadedTestArticleContent = 'My very AWESOME content';
+const testArticle = {
+  title: 'Awesome title',
+  article: 'My very AWESOME content',
+};
+
+const updatedTestArticle = {
+  title: `updated ${testArticle.title}`,
+  article: `updated\n ${testArticle.article}`,
+};
 
 const testUser = {
   firstName: 'Rockfeller',
@@ -25,6 +32,7 @@ const testUser = {
 
 describe('/articles', () => {
   let token;
+  let postedArticle;
 
   before(async () => {
     try {
@@ -45,10 +53,7 @@ describe('/articles', () => {
         const res = await chai.request(app)
           .post('/articles')
           .set('token', token)
-          .send({
-            title: uploadedTestArticleTitle,
-            article: uploadedTestArticleContent,
-          });
+          .send(testArticle);
 
         expect(res.body).to.be.a('object');
         expect(res.body).to.have.property('status', 'success');
@@ -56,7 +61,28 @@ describe('/articles', () => {
         expect(res.body.data).to.have.property('articleId').that.is.a('string');
         expect(res.body.data).to.have.property('message', 'Article successfully posted');
         expect(res.body.data).to.have.property('createdOn').that.is.a('string');
-        expect(res.body.data).to.have.property('title', uploadedTestArticleTitle);
+        expect(res.body.data).to.have.property('title', testArticle.title);
+        postedArticle = res.body.data;
+      } catch (err) {
+        expect.fail(err);
+      }
+    });
+  });
+
+  describe('PATCH /:articleId', () => {
+    it('successfully updates posted article', async () => {
+      try {
+        const res = await chai.request(app)
+          .patch(`/articles/${postedArticle.articleId}`)
+          .set('token', token)
+          .send(updatedTestArticle);
+
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('status', 'success');
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('message', 'Article successfully updated');
+        expect(res.body.data).to.have.property('title', updatedTestArticle.title);
+        expect(res.body.data).to.have.property('article', updatedTestArticle.article);
       } catch (err) {
         expect.fail(err);
       }
