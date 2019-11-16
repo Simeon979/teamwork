@@ -1,7 +1,7 @@
 const { body, sanitizeBody, validationResult } = require('express-validator');
 
 const { query } = require('../../db');
-const uploadGif = require('../../services/gifUpload');
+const gifService = require('../../services/gifUpload');
 
 const makeErrorResponse = require('../../domain/makeErrorResponse');
 
@@ -35,7 +35,7 @@ const createGif = [
     `;
 
     try {
-      const uploadedFile = await uploadGif(filePath);
+      const uploadedFile = await gifService.upload(filePath);
       const fileId = uploadedFile.public_id;
       const fileUrl = uploadedFile.secure_url;
       const { title } = req.body;

@@ -1,3 +1,6 @@
 const cloudinary = require('cloudinary').v2;
 
-module.exports = cloudinary.uploader.upload;
+module.exports = {
+  upload: cloudinary.uploader.upload,
+  remove: cloudinary.uploader.destroy,
+};
