@@ -29,6 +29,7 @@ const testUser = {
 describe('/gif', function () {
   this.timeout(10000);
   let token;
+  let uploadedGif;
 
   before(async () => {
     try {
@@ -60,6 +61,23 @@ describe('/gif', function () {
         expect(res.body.data).to.have.property('createdOn').that.is.a('string');
         expect(res.body.data).to.have.property('title', testGif.title);
         expect(res.body.data).to.have.property('imageUrl').that.is.a('string');
+        uploadedGif = res.body.data;
+      } catch (err) {
+        expect.fail(err);
+      }
+    });
+  });
+
+  describe('DELETE /:gifId', () => {
+    it('successfully deletes uploaded gifs', async () => {
+      try {
+        const res = await chai.request(app)
+          .delete(`/gifs/${uploadedGif.gifId}`)
+          .set('token', token);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('status', 'success');
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('message', 'gif post successfully deleted');
       } catch (err) {
         expect.fail(err);
       }
