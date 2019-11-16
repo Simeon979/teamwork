@@ -90,6 +90,31 @@ describe('/gif', function () {
     });
   });
 
+  describe('GET /:gifId', () => {
+    it('successfully gets uploaded gif', async () => {
+      try {
+        const res = await chai.request(app)
+          .get(`/gifs/${uploadedGif.gifId}`)
+          .set('token', token);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('status', 'success');
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('id', uploadedGif.gifId);
+        expect(res.body.data).to.have.property('createdOn', uploadedGif.createdOn);
+        expect(res.body.data).to.have.property('title', uploadedGif.title);
+        expect(res.body.data).to.have.property('url', uploadedGif.imageUrl);
+        expect(res.body.data).to.have.property('comments').that.is.an('array');
+        res.body.data.comments.forEach((comment) => {
+          expect(comment).to.have.property('commentId').that.is.a('number');
+          expect(comment).to.have.property('comment').that.is.a('string');
+          expect(comment).to.have.property('authorId').that.is.a('number');
+        });
+      } catch (err) {
+        expect.fail(err);
+      }
+    });
+  });
+
   describe('DELETE /:gifId', () => {
     it('successfully deletes uploaded gifs', async () => {
       try {
