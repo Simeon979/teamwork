@@ -53,8 +53,8 @@ describe('/feed', () => {
     try {
       // start on a clean slate
       await query('TRUNCATE employees CASCADE');
-      await query('TRUNCATE articles');
-      await query('TRUNCATE uploaded_gifs');
+      await query('TRUNCATE articles CASCADE');
+      await query('TRUNCATE uploaded_gifs CASCADE');
 
       // create the user for the test
       const res = await chai.request(app)
