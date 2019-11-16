@@ -32,7 +32,8 @@ const testUser = {
   address: 'No 0, Nowhere Ave, Unknown.',
 };
 
-describe('/articles', () => {
+describe('/articles', function () {
+  this.timeout(10000);
   let token;
   let postedArticle;
 
@@ -110,21 +111,46 @@ describe('/articles', () => {
         expect.fail(err);
       }
     });
+  });
 
-    describe('DELETE /:articleId', () => {
-      it('successfully deletes posted articles', async () => {
-        try {
-          const res = await chai.request(app)
-            .delete(`/articles/${postedArticle.articleId}`)
-            .set('token', token);
-          expect(res.body).to.be.a('object');
-          expect(res.body).to.have.property('status', 'success');
-          expect(res.body).to.have.property('data');
-          expect(res.body.data).to.have.property('message', 'Article successfully deleted');
-        } catch (err) {
-          expect.fail(err);
-        }
-      });
+  describe('GET /:articleId', () => {
+    it('successfully gets posted article', async () => {
+      try {
+        const res = await chai.request(app)
+          .get(`/articles/${postedArticle.articleId}`)
+          .set('token', token);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('status', 'success');
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('id', postedArticle.articleId);
+        expect(res.body.data).to.have.property('createdOn', postedArticle.createdOn);
+        expect(res.body.data).to.have.property('title', updatedTestArticle.title);
+        expect(res.body.data).to.have.property('article', updatedTestArticle.article);
+        expect(res.body.data).to.have.property('comments').that.is.an('array');
+        res.body.data.comments.forEach((comment) => {
+          expect(comment).to.have.property('commentId').that.is.a('number');
+          expect(comment).to.have.property('comment').that.is.a('string');
+          expect(comment).to.have.property('authorId').that.is.a('number');
+        });
+      } catch (err) {
+        expect.fail(err);
+      }
+    });
+  });
+
+  describe('DELETE /:articleId', () => {
+    it('successfully deletes posted articles', async () => {
+      try {
+        const res = await chai.request(app)
+          .delete(`/articles/${postedArticle.articleId}`)
+          .set('token', token);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('status', 'success');
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('message', 'Article successfully deleted');
+      } catch (err) {
+        expect.fail(err);
+      }
     });
   });
 });
