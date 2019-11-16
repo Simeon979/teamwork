@@ -28,8 +28,7 @@ const testUser = {
   address: 'No 0, Nowhere Ave, Unknown.',
 };
 
-describe('/gif', function () {
-  this.timeout(10000);
+describe('/gif', () => {
   let token;
   let uploadedGif;
 

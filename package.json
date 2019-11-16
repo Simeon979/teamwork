@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "export NODE_ENV='prod' && node app.js",
-    "test": "export NODE_ENV='test' && mocha --recursive"
+    "test": "export NODE_ENV='test' && mocha --recursive --timeout 999999"
   },
   "repository": {
     "type": "git",

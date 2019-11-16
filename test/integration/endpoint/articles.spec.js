@@ -32,8 +32,7 @@ const testUser = {
   address: 'No 0, Nowhere Ave, Unknown.',
 };
 
-describe('/articles', function () {
-  this.timeout(10000);
+describe('/articles', () => {
   let token;
   let postedArticle;
 
