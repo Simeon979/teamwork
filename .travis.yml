@@ -6,3 +6,11 @@ install:
 cache:
   directories:
     - "$HOME/.npm"
+services:
+  - postgresql
+before_script:
+  - psql -c "create database teamwork-test;" -U postgres
+  - psql -f db/000001.sql
+  - psql -f db/000002.sql
+  - psql -f db/000003.sql
+  - psql -f db/000004.sql
