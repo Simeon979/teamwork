@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "export NODE_ENV='prod' && node app.js",
-    "test": "export NODE_ENV='test' && mocha --recursive --timeout 999999"
+    "test": "export NODE_ENV='test' && nyc mocha --recursive --timeout 999999",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -28,9 +29,11 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "coveralls": "^3.0.7",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
+    "istanbul": "^0.4.5",
     "mocha": "^6.2.2",
     "nodemon": "^1.19.4"
   },
