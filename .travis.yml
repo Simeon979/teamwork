@@ -8,9 +8,19 @@ cache:
     - "$HOME/.npm"
 services:
   - postgresql
+addons:
+  postgresql: "11.3"
 before_script:
-  - psql -c "create database teamwork-test;" -U postgres
-  - psql -f db/000001.sql
-  - psql -f db/000002.sql
-  - psql -f db/000003.sql
-  - psql -f db/000004.sql
+  - psql --version
+  - psql -c "create database teamwork_test;" -U postgres
+  - psql -c "create role travis SUPERUSER LOGIN CREATEDB;" -U postgres
+  - psql -f db/000001.sql -d teamwork_test
+  - psql -f db/000002.sql -d teamwork_test
+  - psql -f db/000003.sql -d teamwork_test
+  - psql -f db/000004.sql -d teamwork_test
+before_install:
+  - sudo apt-get update
+  - sudo apt-get --yes remove postgresql\*
+  - sudo apt-get install -y postgresql-11 postgresql-client-11
+  - sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
+  - sudo service postgresql restart 11 
