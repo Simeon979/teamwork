@@ -19,8 +19,7 @@ before_script:
   - psql -f db/000003.sql -d teamwork_test
   - psql -f db/000004.sql -d teamwork_test
 after_script:
-  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-  - rm -rf ./coverage
+  - npm run coverage
 before_install:
   - sudo apt-get update
   - sudo apt-get --yes remove postgresql\*
