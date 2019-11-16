@@ -33,9 +33,9 @@
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "istanbul": "^0.4.5",
     "mocha": "^6.2.2",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "nyc": "^14.1.1"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
