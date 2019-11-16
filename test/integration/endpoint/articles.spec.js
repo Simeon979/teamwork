@@ -9,6 +9,8 @@ const { query } = require('../../../db');
 const { expect } = chai;
 chai.use(chaiHttp);
 
+const testComment = 'My very POWERFUL UPLIFTING comment';
+
 const testArticle = {
   title: 'Awesome title',
   article: 'My very AWESOME content',
@@ -37,7 +39,7 @@ describe('/articles', () => {
   before(async () => {
     try {
       await query('TRUNCATE employees CASCADE');
-      await query('TRUNCATE articles');
+      await query('TRUNCATE articles CASCADE');
       const res = await chai.request(app)
         .post('/auth/create-user')
         .send(testUser);
@@ -89,19 +91,40 @@ describe('/articles', () => {
     });
   });
 
-  describe('DELETE /:articleId', () => {
-    it('successfully deletes posted articles', async () => {
+  describe('POST /:articleId/comment', () => {
+    it('successfully post comment to articles', async () => {
       try {
         const res = await chai.request(app)
-          .delete(`/articles/${postedArticle.articleId}`)
-          .set('token', token);
-        expect(res.body).to.be.a('object');
+          .post(`/articles/${postedArticle.articleId}/comment`)
+          .set('token', token)
+          .send({ comment: testComment });
+        expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('status', 'success');
         expect(res.body).to.have.property('data');
-        expect(res.body.data).to.have.property('message', 'Article successfully deleted');
+        expect(res.body.data).to.have.property('message', 'Comment successfully created');
+        expect(res.body.data).to.have.property('createdOn').to.be.a('string');
+        expect(res.body.data).to.have.property('articleTitle', updatedTestArticle.title);
+        expect(res.body.data).to.have.property('article', updatedTestArticle.article);
+        expect(res.body.data).to.have.property('comment', testComment);
       } catch (err) {
         expect.fail(err);
       }
+    });
+
+    describe('DELETE /:articleId', () => {
+      it('successfully deletes posted articles', async () => {
+        try {
+          const res = await chai.request(app)
+            .delete(`/articles/${postedArticle.articleId}`)
+            .set('token', token);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('status', 'success');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.property('message', 'Article successfully deleted');
+        } catch (err) {
+          expect.fail(err);
+        }
+      });
     });
   });
 });
