@@ -4,7 +4,7 @@ const nodeEnv = process.env.NODE_ENV;
 
 const connectionString = nodeEnv === 'test'
   ? process.env.TEST_DATABASE_STRING
-  : process.env.DATABASE_STRING;
+  : process.env.DATABASE_URL;
 
 const pool = new Pool({
   connectionString,
