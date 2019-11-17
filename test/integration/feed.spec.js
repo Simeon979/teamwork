@@ -36,6 +36,8 @@ const testGifs = [
   },
 ];
 
+const testAdmin = { email: 'admin@admin.net', password: 'administrator' };
+
 const testUser = {
   firstName: 'Rockfeller',
   lastName: 'Davies',
@@ -52,13 +54,18 @@ describe('/api/v1/feed', () => {
   before(async () => {
     try {
       // start on a clean slate
-      await query('TRUNCATE employees CASCADE');
+      await query('DELETE FROM employees WHERE NOT email=$1', [testAdmin.email]);
       await query('TRUNCATE articles CASCADE');
       await query('TRUNCATE uploaded_gifs CASCADE');
+
+      const adminRes = await chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(testAdmin);
 
       // create the user for the test
       const res = await chai.request(app)
         .post('/api/v1/auth/create-user')
+        .set('token', adminRes.body.data.token)
         .send(testUser);
       token = res.body.data.token;
 
