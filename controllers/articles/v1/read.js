@@ -1,5 +1,5 @@
-const { query } = require('../../db');
-const makeErrorResponse = require('../../domain/makeErrorResponse');
+const { query } = require('../../../db');
+const makeErrorResponse = require('../../../domain/makeErrorResponse');
 
 const getArticle = async (req, res, next) => {
   const { articleId } = req.params;

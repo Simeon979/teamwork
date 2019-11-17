@@ -1,18 +1,15 @@
 const express = require('express');
 
-const authRouter = require('./routes/auth');
-const gifsRouter = require('./routes/gifs');
-const articlesRouter = require('./routes/articles');
-const feedRouter = require('./routes/feed');
+const v1 = require('./routes/v1');
 const authorize = require('./services/session');
 
 const app = express();
 
 app.use(express.json());
-app.use('/auth', authRouter);
-app.use('/gifs', authorize, gifsRouter);
-app.use('/articles', authorize, articlesRouter);
-app.use('/feed', authorize, feedRouter);
+app.use('/v1/auth', v1.authRouter);
+app.use('/v1/gifs', authorize, v1.gifsRouter);
+app.use('/v1/articles', authorize, v1.articlesRouter);
+app.use('/v1/feed', authorize, v1.feedRouter);
 
 const PORT = 3100;
 

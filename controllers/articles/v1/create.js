@@ -1,7 +1,7 @@
 const { body, sanitizeBody, validationResult } = require('express-validator');
 const uniqid = require('uniqid');
 
-const { query } = require('../../db');
+const { query } = require('../../../db');
 
 const createArticle = [
   body('title', 'should not be empty').isLength({ min: 1 }),

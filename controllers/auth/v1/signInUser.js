@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const R = require('ramda');
 
-const { query } = require('../../db');
+const { query } = require('../../../db');
 
 const authenticateUser = [
   body('email', 'cannot be empty').isLength({ min: 1 }).trim(),

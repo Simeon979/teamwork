@@ -1,5 +1,5 @@
-const { query } = require('../../db');
-const makeErrorResponse = require('../../domain/makeErrorResponse');
+const { query } = require('../../../db');
+const makeErrorResponse = require('../../../domain/makeErrorResponse');
 
 const deleteArticle = async (req, res, next) => {
   const { employeeid } = req.currentUser;

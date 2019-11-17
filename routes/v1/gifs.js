@@ -3,10 +3,10 @@ const multer = require('multer');
 
 const upload = multer({ dest: 'uploads' });
 
-const createGifs = require('../controllers/gifs/create');
-const deleteGifs = require('../controllers/gifs/delete');
-const createComment = require('../controllers/gifs/comments/create');
-const getGif = require('../controllers/gifs/read');
+const createGifs = require('../../controllers/gifs/v1/create');
+const deleteGifs = require('../../controllers/gifs/v1/delete');
+const createComment = require('../../controllers/gifs/v1/comments/create');
+const getGif = require('../../controllers/gifs/v1/read');
 
 gifsRouter.post('/', upload.single('image'), createGifs);
 gifsRouter.delete('/:gifId', deleteGifs);

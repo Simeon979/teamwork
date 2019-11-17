@@ -1,9 +1,9 @@
 const { body, sanitizeBody, validationResult } = require('express-validator');
 
-const { query } = require('../../db');
-const gifService = require('../../services/gifUpload');
+const { query } = require('../../../db');
+const gifService = require('../../../services/gifUpload');
 
-const makeErrorResponse = require('../../domain/makeErrorResponse');
+const makeErrorResponse = require('../../../domain/makeErrorResponse');
 
 const createGif = [
   body('title', 'cannot be empty').isLength({ min: 1 }).trim(),

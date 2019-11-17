@@ -25,13 +25,13 @@ const incomplete = {
   email: 'abc@def.ghi',
 };
 
-describe('POST /auth/create-user', () => {
+describe('POST /v1/auth/create-user', () => {
   beforeEach(async () => query('TRUNCATE employees CASCADE'));
 
   it('should not create an employee with incomplete information', async () => {
     try {
       const res = await chai.request(app)
-        .post('/auth/create-user')
+        .post('/v1/auth/create-user')
         .send(incomplete);
       expect(res.body).to.be.a('object');
       expect(res.body).to.have.property('status', 'error');
@@ -44,7 +44,7 @@ describe('POST /auth/create-user', () => {
   it('should create an employee with complete information', async () => {
     try {
       const res = await chai.request(app)
-        .post('/auth/create-user')
+        .post('/v1/auth/create-user')
         .send(complete);
       expect(res.body).to.be.a('object');
       expect(res.body).to.have.property('status', 'success');
@@ -58,12 +58,12 @@ describe('POST /auth/create-user', () => {
   });
 });
 
-describe('POST /auth/signin', () => {
+describe('POST /v1/auth/signin', () => {
   before(async () => {
     try {
       await query('TRUNCATE employees CASCADE');
       await chai.request(app)
-        .post('/auth/create-user')
+        .post('/v1/auth/create-user')
         .send(complete);
     } catch (err) {
       expect.fail(err);
@@ -73,7 +73,7 @@ describe('POST /auth/signin', () => {
   it('successfully signs user with correct credentials in', async () => {
     try {
       const res = await chai.request(app)
-        .post('/auth/signin')
+        .post('/v1/auth/signin')
         .send({ email: complete.email, password: complete.password });
       expect(res.body).to.be.a('object');
       expect(res.body).to.have.property('status', 'success');
@@ -88,7 +88,7 @@ describe('POST /auth/signin', () => {
   it('fails to sign in user with incorrect credentials', async () => {
     try {
       const res = await chai.request(app)
-        .post('/auth/signin')
+        .post('/v1/auth/signin')
         .send({ email: complete.email, password: `${complete.password}incorrect` });
       expect(res.body).to.be.a('object');
       expect(res.body).to.have.property('status', 'error');
@@ -101,7 +101,7 @@ describe('POST /auth/signin', () => {
   it('fails to sign in unregistered user', async () => {
     try {
       const res = await chai.request(app)
-        .post('/auth/signin')
+        .post('/v1/auth/signin')
         .send({ email: 'haha@not.registered', password: `${complete.password}incorrect` });
       expect(res.body).to.be.a('object');
       expect(res.body).to.have.property('status', 'error');

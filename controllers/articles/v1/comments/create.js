@@ -1,7 +1,7 @@
 const { body, sanitizeBody, validationResult } = require('express-validator');
 
-const { query } = require('../../../db');
-const makeErrorResponse = require('../../../domain/makeErrorResponse');
+const { query } = require('../../../../db');
+const makeErrorResponse = require('../../../../domain/makeErrorResponse');
 
 const createComment = [
   body('comment', 'cannot be empty').isLength({ min: 1 }),
@@ -15,38 +15,39 @@ const createComment = [
     const { employeeid } = req.currentUser;
     const sql = `
     WITH inserted AS (
-      INSERT INTO gif_comments (
+      INSERT INTO article_comments (
         comment,
-        gif_id,
+        article_id,
         poster_id
       )   VALUES ($1, $2, $3)
       RETURNING *
     )
-    SELECT comment, inserted.created_on, title
-    FROM inserted JOIN uploaded_gifs ON inserted.gif_id=uploaded_gifs.gif_id
+    SELECT comment, inserted.created_on, title, article_content
+    FROM inserted JOIN articles ON inserted.article_id=articles.article_id
     `;
 
     try {
       const params = [
         req.body.comment,
-        req.params.gifId,
+        req.params.articleId,
         employeeid,
       ];
 
       const result = await query(sql, params);
 
       if (result.rows.length !== 1) {
-        return makeErrorResponse(res, 404, 'gif not found');
+        return makeErrorResponse(res, 404, 'article not found');
       }
       const [savedComment] = result.rows;
 
       return res.json({
         status: 'success',
         data: {
-          message: 'comment successfully created',
+          message: 'Comment successfully created',
           createdOn: savedComment.created_on,
           comment: savedComment.comment,
-          gifTitle: savedComment.title,
+          articleTitle: savedComment.title,
+          article: savedComment.article_content,
         },
       });
     } catch (err) {

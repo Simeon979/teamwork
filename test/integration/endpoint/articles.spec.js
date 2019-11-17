@@ -32,7 +32,7 @@ const testUser = {
   address: 'No 0, Nowhere Ave, Unknown.',
 };
 
-describe('/articles', () => {
+describe('/v1/articles', () => {
   let token;
   let postedArticle;
 
@@ -41,7 +41,7 @@ describe('/articles', () => {
       await query('TRUNCATE employees CASCADE');
       await query('TRUNCATE articles CASCADE');
       const res = await chai.request(app)
-        .post('/auth/create-user')
+        .post('/v1/auth/create-user')
         .send(testUser);
       token = res.body.data.token;
     } catch (err) {
@@ -49,11 +49,11 @@ describe('/articles', () => {
     }
   });
 
-  describe('POST /', () => {
+  describe('POST /v1/', () => {
     it('successfully uploads articles', async () => {
       try {
         const res = await chai.request(app)
-          .post('/articles')
+          .post('/v1/articles')
           .set('token', token)
           .send(testArticle);
 
@@ -71,11 +71,11 @@ describe('/articles', () => {
     });
   });
 
-  describe('PATCH /:articleId', () => {
+  describe('PATCH /v1/:articleId', () => {
     it('successfully updates posted article', async () => {
       try {
         const res = await chai.request(app)
-          .patch(`/articles/${postedArticle.articleId}`)
+          .patch(`/v1/articles/${postedArticle.articleId}`)
           .set('token', token)
           .send(updatedTestArticle);
 
@@ -91,11 +91,11 @@ describe('/articles', () => {
     });
   });
 
-  describe('POST /:articleId/comment', () => {
+  describe('POST /v1/:articleId/comment', () => {
     it('successfully post comment to articles', async () => {
       try {
         const res = await chai.request(app)
-          .post(`/articles/${postedArticle.articleId}/comment`)
+          .post(`/v1/articles/${postedArticle.articleId}/comment`)
           .set('token', token)
           .send({ comment: testComment });
         expect(res.body).to.be.an('object');
@@ -112,11 +112,11 @@ describe('/articles', () => {
     });
   });
 
-  describe('GET /:articleId', () => {
+  describe('GET /v1/:articleId', () => {
     it('successfully gets posted article', async () => {
       try {
         const res = await chai.request(app)
-          .get(`/articles/${postedArticle.articleId}`)
+          .get(`/v1/articles/${postedArticle.articleId}`)
           .set('token', token);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('status', 'success');
@@ -137,11 +137,11 @@ describe('/articles', () => {
     });
   });
 
-  describe('DELETE /:articleId', () => {
+  describe('DELETE /v1/:articleId', () => {
     it('successfully deletes posted articles', async () => {
       try {
         const res = await chai.request(app)
-          .delete(`/articles/${postedArticle.articleId}`)
+          .delete(`/v1/articles/${postedArticle.articleId}`)
           .set('token', token);
         expect(res.body).to.be.a('object');
         expect(res.body).to.have.property('status', 'success');

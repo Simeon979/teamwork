@@ -3,7 +3,7 @@ const R = require('ramda');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const { query } = require('../../db');
+const { query } = require('../../../db');
 
 const reqInfo = [
   'firstName',

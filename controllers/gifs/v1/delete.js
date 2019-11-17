@@ -1,6 +1,6 @@
-const { query } = require('../../db');
-const gifService = require('../../services/gifUpload');
-const makeErrorResponse = require('../../domain/makeErrorResponse');
+const { query } = require('../../../db');
+const gifService = require('../../../services/gifUpload');
+const makeErrorResponse = require('../../../domain/makeErrorResponse');
 
 const deleteGif = async (req, res, next) => {
   const { employeeid } = req.currentUser;

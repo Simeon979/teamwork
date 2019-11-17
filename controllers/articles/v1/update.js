@@ -1,7 +1,7 @@
 const { body, sanitizeBody, validationResult } = require('express-validator');
 
-const { query } = require('../../db');
-const makeErrorResponse = require('../../domain/makeErrorResponse');
+const { query } = require('../../../db');
+const makeErrorResponse = require('../../../domain/makeErrorResponse');
 
 const updateArticle = [
   body('title', 'should not be empty').isLength({ min: 1 }),
