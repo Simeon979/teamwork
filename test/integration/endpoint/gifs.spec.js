@@ -28,7 +28,7 @@ const testUser = {
   address: 'No 0, Nowhere Ave, Unknown.',
 };
 
-describe('/v1/gif', () => {
+describe('/api/v1/gifs', () => {
   let token;
   let uploadedGif;
 
@@ -37,7 +37,7 @@ describe('/v1/gif', () => {
       await query('TRUNCATE employees CASCADE');
       await query('TRUNCATE uploaded_gifs CASCADE');
       const res = await chai.request(app)
-        .post('/v1/auth/create-user')
+        .post('/api/v1/auth/create-user')
         .send(testUser);
       token = res.body.data.token;
     } catch (err) {
@@ -45,11 +45,11 @@ describe('/v1/gif', () => {
     }
   });
 
-  describe('POST /v1/', () => {
+  describe('POST /', () => {
     it('successfully uploads gifs', async () => {
       try {
         const res = await chai.request(app)
-          .post('/v1/gifs')
+          .post('/api/v1/gifs')
           .set('token', token)
           .field('title', testGif.title)
           .attach('image', fs.readFileSync(testGif.location), 'test.gif');
@@ -68,11 +68,11 @@ describe('/v1/gif', () => {
     });
   });
 
-  describe('POST /v1/:gifId/comment', () => {
+  describe('POST /:gifId/comment', () => {
     it('successfully post comment to gifs', async () => {
       try {
         const res = await chai.request(app)
-          .post(`/v1/gifs/${uploadedGif.gifId}/comment`)
+          .post(`/api/v1/gifs/${uploadedGif.gifId}/comment`)
           .set('token', token)
           .send({ comment: testComment });
         expect(res.body).to.be.an('object');
@@ -88,11 +88,11 @@ describe('/v1/gif', () => {
     });
   });
 
-  describe('GET /v1/:gifId', () => {
+  describe('GET /:gifId', () => {
     it('successfully gets uploaded gif', async () => {
       try {
         const res = await chai.request(app)
-          .get(`/v1/gifs/${uploadedGif.gifId}`)
+          .get(`/api/v1/gifs/${uploadedGif.gifId}`)
           .set('token', token);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('status', 'success');
@@ -113,11 +113,11 @@ describe('/v1/gif', () => {
     });
   });
 
-  describe('DELETE /v1/:gifId', () => {
+  describe('DELETE /:gifId', () => {
     it('successfully deletes uploaded gifs', async () => {
       try {
         const res = await chai.request(app)
-          .delete(`/v1/gifs/${uploadedGif.gifId}`)
+          .delete(`/api/v1/gifs/${uploadedGif.gifId}`)
           .set('token', token);
         expect(res.body).to.be.a('object');
         expect(res.body).to.have.property('status', 'success');

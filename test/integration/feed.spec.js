@@ -47,7 +47,7 @@ const testUser = {
   address: 'No 0, Nowhere Ave, Unknown.',
 };
 
-describe('/v1/feed', () => {
+describe('/api/v1/feed', () => {
   let token;
   before(async () => {
     try {
@@ -58,14 +58,14 @@ describe('/v1/feed', () => {
 
       // create the user for the test
       const res = await chai.request(app)
-        .post('/v1/auth/create-user')
+        .post('/api/v1/auth/create-user')
         .send(testUser);
       token = res.body.data.token;
 
       // add some test articles and gifs for the test
       const articleReqs = testArticles.map(async (article) => {
         const response = await chai.request(app)
-          .post('/v1/articles')
+          .post('/api/v1/articles')
           .set('token', token)
           .send(article);
         return response;
@@ -73,7 +73,7 @@ describe('/v1/feed', () => {
 
       const gifReqs = testGifs.map(async (gif) => {
         const response = await chai.request(app)
-          .post('/v1/gifs')
+          .post('/api/v1/gifs')
           .set('token', token)
           .attach('image', fs.readFileSync(gif.gif), 'test.gif')
           .field('title', gif.title);
@@ -86,11 +86,11 @@ describe('/v1/feed', () => {
     }
   });
 
-  describe('GET /v1/', () => {
+  describe('GET /', () => {
     it('successfully retrieves employees feed', async () => {
       try {
         const res = await chai.request(app)
-          .get('/v1/feed')
+          .get('/api/v1/feed')
           .set('token', token);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('status', 'success');
