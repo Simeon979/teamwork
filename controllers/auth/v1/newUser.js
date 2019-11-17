@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const { query } = require('../../../db');
+const makeErrorResponse = require('../../../domain/makeErrorResponse');
 
 const reqInfo = [
   'firstName',
@@ -31,10 +32,7 @@ const createUser = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.status(422).json({
-        status: 'error',
-        error: errors.array(),
-      });
+      return makeErrorResponse(res, 400, 'there was an error submitting your form');
     }
 
     const sql = `

@@ -12,10 +12,7 @@ const createGif = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.status(422).json({
-        status: 'error',
-        error: errors.array(),
-      });
+      return makeErrorResponse(res, 400, 'there was an error submitting your form');
     }
     const user = req.currentUser;
     const filePath = req.file.path;

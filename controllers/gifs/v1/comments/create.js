@@ -9,7 +9,7 @@ const createComment = [
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return makeErrorResponse(res, 422, 'please fill out every field');
+      return makeErrorResponse(res, 400, 'please fill out every field');
     }
 
     const { employeeid } = req.currentUser;

@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const R = require('ramda');
 
 const { query } = require('../../../db');
+const makeErrorResponse = require('../../../domain/makeErrorResponse');
 
 const authenticateUser = [
   body('email', 'cannot be empty').isLength({ min: 1 }).trim(),
@@ -13,7 +14,7 @@ const authenticateUser = [
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json({ status: 'error', error: errors.array() });
+      return makeErrorResponse(res, 400, 'there was an error submitting your form');
     }
 
     try {

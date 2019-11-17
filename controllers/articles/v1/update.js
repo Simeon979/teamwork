@@ -10,10 +10,7 @@ const updateArticle = [
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json({
-        status: 'error',
-        error: errors.array(),
-      });
+      return makeErrorResponse(res, 400, 'please fill out every field');
     }
 
     const { employeeid } = req.currentUser;

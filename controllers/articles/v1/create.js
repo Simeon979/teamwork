@@ -2,6 +2,7 @@ const { body, sanitizeBody, validationResult } = require('express-validator');
 const uniqid = require('uniqid');
 
 const { query } = require('../../../db');
+const { makeErrorResponse } = require('../../../domain/makeErrorResponse');
 
 const createArticle = [
   body('title', 'should not be empty').isLength({ min: 1 }),
@@ -10,10 +11,7 @@ const createArticle = [
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json({
-        status: 'error',
-        error: errors.array(),
-      });
+      return makeErrorResponse(res, 400, 'please fill out every field');
     }
 
     const { employeeid } = req.currentUser;
