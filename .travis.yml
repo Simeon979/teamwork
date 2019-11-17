@@ -18,6 +18,7 @@ before_script:
   - psql -f db/000002.sql -d teamwork_test
   - psql -f db/000003.sql -d teamwork_test
   - psql -f db/000004.sql -d teamwork_test
+  - psql -f db/000005.sql -d teamwork_test
 after_script:
   - npm run coverage
 before_install:

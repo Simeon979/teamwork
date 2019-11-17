@@ -49,6 +49,9 @@ const createUser = [
     RETURNING *
     `;
     try {
+      if (req.currentUser.dept !== 'admin') {
+        return makeErrorResponse(res, 403, 'You must be an admin to do this');
+      }
       const userInfo = R.pick(reqInfo, req.body);
 
       const password = R.prop('password', userInfo);
@@ -66,7 +69,7 @@ const createUser = [
       const secret = process.env.JWT_KEY;
       const token = await jwt.sign(payload, secret, { expiresIn: '1h' });
 
-      return res.json({
+      return res.status(201).json({
         status: 'success',
         data: {
           message: 'User account successfully created',
