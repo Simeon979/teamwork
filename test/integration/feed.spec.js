@@ -106,7 +106,7 @@ describe('/api/v1/feed', () => {
         expect(res.body.data.length).to.be.equal(5);
         res.body.data.forEach((item) => {
           expect(item).to.be.an('object');
-          expect(item).to.have.property('id').that.is.a('string');
+          expect(item).to.have.property('id').that.is.a('number');
           expect(item).to.have.property('createdOn').that.is.a('string');
           expect(item).to.have.any.keys(['article', 'url']);
           expect(item).to.have.property('authorId').that.is.a('number');

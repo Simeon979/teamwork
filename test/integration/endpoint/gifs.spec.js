@@ -63,7 +63,7 @@ describe('/api/v1/gifs', () => {
         expect(res.body).to.be.a('object');
         expect(res.body).to.have.property('status', 'success');
         expect(res.body).to.have.property('data');
-        expect(res.body.data).to.have.property('gifId').that.is.a('string');
+        expect(res.body.data).to.have.property('gifId').that.is.a('number');
         expect(res.body.data).to.have.property('message', 'GIF image successfully posted');
         expect(res.body.data).to.have.property('createdOn').that.is.a('string');
         expect(res.body.data).to.have.property('title', testGif.title);

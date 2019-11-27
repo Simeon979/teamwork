@@ -1,5 +1,4 @@
 const { body, sanitizeBody, validationResult } = require('express-validator');
-const uniqid = require('uniqid');
 
 const { query } = require('../../../db');
 const { makeErrorResponse } = require('../../../domain/makeErrorResponse');
@@ -18,17 +17,15 @@ const createArticle = [
 
     const sql = `
     INSERT INTO articles (
-      article_id,
       title,
       article_content,
       poster_id
-    ) VALUES ($1, $2, $3, $4)
+    ) VALUES ($1, $2, $3)
     RETURNING *
     `;
 
     try {
-      const articleId = uniqid();
-      const params = [articleId, req.body.title, req.body.article, employeeid];
+      const params = [req.body.title, req.body.article, employeeid];
       const result = await query(sql, params);
       const savedArticle = result.rows[0];
 

@@ -67,7 +67,7 @@ describe('/api/v1/articles', () => {
         expect(res.body).to.be.a('object');
         expect(res.body).to.have.property('status', 'success');
         expect(res.body).to.have.property('data');
-        expect(res.body.data).to.have.property('articleId').that.is.a('string');
+        expect(res.body.data).to.have.property('articleId').that.is.a('number');
         expect(res.body.data).to.have.property('message', 'Article successfully posted');
         expect(res.body.data).to.have.property('createdOn').that.is.a('string');
         expect(res.body.data).to.have.property('title', testArticle.title);

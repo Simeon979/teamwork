@@ -24,7 +24,8 @@ const getArticle = async (req, res, next) => {
   `;
 
   try {
-    const articleResult = await query(sql1, [articleId]);
+    const articleIdAsNumber = +articleId;
+    const articleResult = await query(sql1, [articleIdAsNumber]);
     if (articleResult.rows.length !== 1) {
       return makeErrorResponse(res, 404, 'article not found');
     }
@@ -33,7 +34,7 @@ const getArticle = async (req, res, next) => {
     return res.json({
       status: 'success',
       data: {
-        id: articleId,
+        id: articleIdAsNumber,
         createdOn: foundArticle.created_on,
         title: foundArticle.title,
         article: foundArticle.article_content,

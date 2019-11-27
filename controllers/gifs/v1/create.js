@@ -23,21 +23,19 @@ const createGif = [
 
     const sql = `
     INSERT INTO uploaded_gifs (
-      gif_id,
       title,
       image_url,
       uploader_id
-    ) VALUES ($1, $2, $3, $4)
+    ) VALUES ($1, $2, $3)
     RETURNING *
     `;
 
     try {
       const uploadedFile = await gifService.upload(filePath);
-      const fileId = uploadedFile.public_id;
       const fileUrl = uploadedFile.secure_url;
       const { title } = req.body;
 
-      const result = await query(sql, [fileId, title, fileUrl, user.employeeid]);
+      const result = await query(sql, [title, fileUrl, user.employeeid]);
       const savedGif = result.rows[0];
       return res.json({
         status: 'success',

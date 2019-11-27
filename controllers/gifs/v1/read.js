@@ -17,7 +17,8 @@ const getGif = async (req, res, next) => {
   `;
 
   try {
-    const gifResult = await query(sql1, [gifId]);
+    const gifIdAsNumber = +gifId;
+    const gifResult = await query(sql1, [gifIdAsNumber]);
     if (gifResult.rows.length !== 1) {
       return makeErrorResponse(res, 404, 'gif not found');
     }
@@ -26,7 +27,7 @@ const getGif = async (req, res, next) => {
     return res.json({
       status: 'success',
       data: {
-        id: gifId,
+        id: gifIdAsNumber,
         createdOn: foundGif.created_on,
         title: foundGif.title,
         url: foundGif.image_url,
