@@ -105,6 +105,7 @@ describe('/api/v1/articles', () => {
           .post(`/api/v1/articles/${postedArticle.articleId}/comment`)
           .set('token', token)
           .send({ comment: testComment });
+        console.log(res.body);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('status', 'success');
         expect(res.body).to.have.property('data');
@@ -125,6 +126,7 @@ describe('/api/v1/articles', () => {
         const res = await chai.request(app)
           .get(`/api/v1/articles/${postedArticle.articleId}`)
           .set('token', token);
+        console.log(res.body);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('status', 'success');
         expect(res.body).to.have.property('data');

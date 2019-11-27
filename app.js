@@ -13,14 +13,12 @@ app.use('/api/v1/gifs', authorize, v1.gifsRouter);
 app.use('/api/v1/articles', authorize, v1.articlesRouter);
 app.use('/api/v1/feed', authorize, v1.feedRouter);
 
-app.use((req, res, next) => res.status(404).json({ status: 'error', error: 'the requested resource was not found'}));
+app.use((req, res, next) => res.status(404).json({ status: 'error', error: 'the requested resource was not found' }));
 
-app.use((err,req, res, next) => {
-  return res.status(500).json({
-    status: 'error',
-    error: 'there was an error processing the request',
-  });
-});
+app.use((err, req, res, next) => res.status(500).json({
+  status: 'error',
+  error: err,
+}));
 
 const PORT = process.env.PORT || 3100;
 
