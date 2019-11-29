@@ -1,7 +1,6 @@
 const { query } = require('../../../db');
 
 const getFeed = async (req, res, next) => {
-  const { employeeid } = req.currentUser;
 
   const sql = `
     SELECT
@@ -12,7 +11,6 @@ const getFeed = async (req, res, next) => {
       poster_id AS author_id,
       'article' AS type
     FROM articles
-    WHERE poster_id=$1
     UNION
     SELECT
       gif_id AS id,
@@ -22,11 +20,10 @@ const getFeed = async (req, res, next) => {
       uploader_id AS author_id,
       'gif' AS type
     FROM uploaded_gifs
-    WHERE uploader_id=$1
     ORDER BY created_on ASC;
   `;
   try {
-    const result = await query(sql, [employeeid]);
+    const result = await query(sql);
     const data = result.rows.map((row) => ({
       id: row.id,
       createdOn: row.created_on,
