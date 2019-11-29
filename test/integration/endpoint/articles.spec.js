@@ -135,6 +135,7 @@ describe('/api/v1/articles', () => {
         expect(res.body.data).to.have.property('title', updatedTestArticle.title);
         expect(res.body.data).to.have.property('article', updatedTestArticle.article);
         expect(res.body.data).to.have.property('comments').that.is.an('array');
+        expect(res.body.data).to.have.property('authorName').that.is.a('string');
         res.body.data.comments.forEach((comment) => {
           expect(comment).to.have.property('commentId').that.is.a('number');
           expect(comment).to.have.property('comment').that.is.a('string');

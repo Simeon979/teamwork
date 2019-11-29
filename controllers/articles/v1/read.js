@@ -12,8 +12,9 @@ const getArticle = async (req, res, next) => {
 */
 
   const sql1 = `
-  SELECT created_on, title, article_content
+  SELECT created_on, title, article_content, firstname, lastname
   FROM articles
+  JOIN employees ON poster_id=employeeid
   WHERE article_id=$1
   `;
 
@@ -38,6 +39,7 @@ const getArticle = async (req, res, next) => {
         createdOn: foundArticle.created_on,
         title: foundArticle.title,
         article: foundArticle.article_content,
+        authorName: `${foundArticle.firstname} ${foundArticle.lastname}`,
         comments: commentResult.rows.map((comment) => ({
           commentId: comment.comment_id,
           comment: comment.comment,
