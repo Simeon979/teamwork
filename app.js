@@ -17,7 +17,7 @@ app.use((req, res, next) => res.status(404).json({ status: 'error', error: 'the 
 
 app.use((err, req, res, next) => res.status(500).json({
   status: 'error',
-  error: err,
+  error: 'An error occured processing your request',
 }));
 
 const PORT = process.env.PORT || 3100;

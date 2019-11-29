@@ -3,6 +3,7 @@ const { query } = require('../../../db');
 const getFeed = async (req, res, next) => {
 
   const sql = `
+  WITH feed as (
     SELECT
       article_id AS id,
       created_on,
@@ -20,7 +21,11 @@ const getFeed = async (req, res, next) => {
       uploader_id AS author_id,
       'gif' AS type
     FROM uploaded_gifs
-    ORDER BY created_on ASC;
+    ORDER BY created_on ASC
+  )
+  SELECT feed.*, employees.firstName, employees.lastName
+  FROM feed
+  JOIN employees ON author_id=employeeid
   `;
   try {
     const result = await query(sql);
@@ -30,6 +35,7 @@ const getFeed = async (req, res, next) => {
       title: row.title,
       [`${row.type === 'article' ? 'article' : 'url'}`]: row.content,
       authorId: row.author_id,
+      authorName: `${row.firstname} ${row.lastname}`,
     }));
     return res.json({
       status: 'success',

@@ -110,6 +110,7 @@ describe('/api/v1/feed', () => {
           expect(item).to.have.property('createdOn').that.is.a('string');
           expect(item).to.have.any.keys(['article', 'url']);
           expect(item).to.have.property('authorId').that.is.a('number');
+          expect(item).to.have.property('authorName').that.is.a('string');
         });
       } catch (err) {
         expect.fail(err);
